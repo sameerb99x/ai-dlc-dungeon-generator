@@ -2,14 +2,14 @@
 
 ## Purpose and Boundary
 
-U1 publishes deeply immutable, technology-agnostic values used by all remaining units. It accepts parsed candidate data, provides representation-level construction and comparison, and returns typed diagnostics for invalid caller input. U1 does not generate a layout, decide complete structural or playability validity, access browser APIs, serialize data, or mutate any supplied value.
+U1 publishes technology-agnostic values with readonly TypeScript contracts and defensive-copy boundaries. It accepts parsed candidate data, provides representation-level construction and comparison, and returns typed diagnostics for invalid caller input. U1 does not generate a layout, decide complete structural or playability validity, access browser APIs, serialize data, or mutate any supplied value.
 
 ## Construction Flow
 
 1. A caller supplies parsed primitives and structured candidate data in the published bottom-left coordinate system.
 2. Value constructors check their local representation rules and return either a complete immutable value or typed diagnostics.
 3. `createDungeon` checks the bounded grid shape, coordinate references, room and corridor shapes, and unique distinct entrance and exit markers; it does not evaluate connectivity, path length, dead ends, or generator acceptance.
-4. A successful `Dungeon` can be safely shared with generators, validators, play-session evaluation, rendering, and persistence without defensive mutation concerns.
+4. A successful `Dungeon` is exposed through readonly TypeScript types; constructors defensively copy caller input and consumers must treat nested values as read-only by contract.
 5. A new play session starts at the dungeon entrance with `completed = false`; the distinct-marker invariant makes that state unambiguous.
 
 ## Entity Relationships
@@ -42,7 +42,7 @@ The user selected full accepted-result reproducibility equality. The U1 public c
 | Area | Property category | Property to carry into Code Generation |
 |---|---|---|
 | Value constructors | Invariant | Every successful value satisfies its documented representation constraints; every invalid generated input returns diagnostics and no partial value. |
-| Deep immutability | Invariant | Mutating source collections after construction cannot alter any observed domain value. |
+| Defensive-copy isolation | Invariant | Mutating source collections after construction cannot alter any observed domain value; public nested values are readonly by TypeScript contract rather than recursively frozen at runtime. |
 | Grid representation | Invariant | A successful dungeon has exactly `width × height` addressable tiles and every stored coordinate is within bounds. |
 | Markers | Invariant | A successful dungeon has exactly one walkable entrance and one walkable exit at distinct coordinates. |
 | Equality | Invariant | Full-result equality is reflexive, symmetric, and transitive; changing any compared field makes otherwise equal results unequal. |

@@ -34,7 +34,7 @@
 
 - U1 creates and owns the representation types and their local validity rules.
 - U2 creates `EffectiveGenerationRequest`; U3 creates candidate data; U4 creates validation reports; U5 transitions play sessions; U6 assembles accepted results; U7 serializes results; U8 and U9 only consume them.
-- Values cross boundaries only as deeply immutable data. Any collection exposed to a caller is read-only and cannot mutate the aggregate that produced it.
+- Values cross boundaries with defensive-copy isolation and readonly TypeScript contracts. Runtime recursive freezing is not applied; consumers must honor the readonly contract for nested collections.
 
 ## Equality Model
 

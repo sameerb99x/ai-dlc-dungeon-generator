@@ -4,7 +4,7 @@
 
 | ID | Requirement | Verification approach |
 |---|---|---|
-| U1-NFR-01 | Domain values and nested collections are deeply immutable at public boundaries. | Example and property-based mutation-isolation tests. |
+| U1-NFR-01 | Domain values defensively copy caller-supplied data and expose readonly TypeScript contracts at public boundaries; recursive runtime freezing is not required. | Example and property-based source-mutation isolation tests plus static type checking. |
 | U1-NFR-02 | Constructors and equality are deterministic and do not use ambient time, unseeded randomness, browser APIs, or unordered iteration. | Static review and property tests. |
 | U1-NFR-03 | Expected invalid caller data returns typed diagnostics without partial values; only programming defects or broken internal invariants may throw. | Example and property tests over invalid structured inputs. |
 | U1-NFR-04 | Correctness and deterministic behavior take precedence over an early standalone timing threshold. Concrete map-size and response-time limits remain owned by U2 and U3 after algorithm selection. | Later supported-limit and generation benchmarks. |

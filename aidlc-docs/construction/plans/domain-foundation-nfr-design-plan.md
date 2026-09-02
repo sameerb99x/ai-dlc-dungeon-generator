@@ -16,12 +16,12 @@ Translate U1 quality requirements into concrete logical patterns while preservin
 
 - [x] Analyze approved U1 NFR requirements and stack decisions.
 - [x] Assess applicability of resilience, scalability, performance, security, and infrastructure patterns.
-- [ ] Validate completed answers for ambiguity or contradiction.
-- [ ] Define deep-immutability, typed-failure, determinism, and PBT reproducibility patterns.
-- [ ] Define U1 logical components and prohibited dependencies.
-- [ ] Create `nfr-design-patterns.md`.
-- [ ] Create `logical-components.md`.
-- [ ] Validate traceability and enabled PBT compliance, update state and audit, and present the review gate.
+- [x] Validate completed answers for ambiguity or contradiction.
+- [x] Define readonly-boundary, typed-failure, determinism, and PBT reproducibility patterns.
+- [x] Define U1 logical components and prohibited dependencies.
+- [x] Create `nfr-design-patterns.md`.
+- [x] Create `logical-components.md`.
+- [x] Validate traceability and enabled PBT compliance, update state and audit, and present the review gate.
 
 ## Questions
 
@@ -47,7 +47,7 @@ B) Catch them inside U1 and return a generic typed diagnostic for every failure.
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: A
 
 ## Question 3
 
@@ -59,4 +59,4 @@ B) Use a newly randomized seed for each CI run and require the seed to be logged
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: A

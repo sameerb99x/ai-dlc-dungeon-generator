@@ -4,7 +4,7 @@
 - **Project Type**: Greenfield
 - **Start Date**: 2026-09-02T04:39:52Z
 - **Current Phase**: CONSTRUCTION
-- **Current Stage**: U1 domain-foundation NFR Design - Questions
+- **Current Stage**: U1 domain-foundation NFR Design - Review
 - **Requirements Depth**: Comprehensive
 - **Request Clarity**: Resolved through verification and clarification questions
 - **Initial Scope**: Multiple components
@@ -60,10 +60,10 @@
 - [ ] Operations — placeholder
 
 ## Current Gate
-- Awaiting completed answers in `aidlc-docs/construction/plans/domain-foundation-nfr-design-plan.md`
+- Awaiting explicit approval of `aidlc-docs/construction/domain-foundation/nfr-design/`
 
 ## Planned Next Stage
-- Generate U1 `domain-foundation` NFR Design artifacts after plan answers are complete and unambiguous
+- U1 `domain-foundation` Code Generation planning after NFR Design approval
 
 ## Execution Plan Summary
 - **Risk Level**: High

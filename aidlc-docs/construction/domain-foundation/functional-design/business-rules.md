@@ -11,7 +11,7 @@
 | DF-05 | An entrance or exit marker may appear only on a walkable tile. | Dungeon construction |
 | DF-06 | A dungeon has exactly one entrance and exactly one exit; their coordinates must be distinct. | Dungeon construction |
 | DF-07 | Every room and corridor has valid ordered, in-bounds geometry. Their overlap, connectivity, path length, corridor-width compliance, and dead-end compliance are deferred to U4. | Dungeon construction / U4 later |
-| DF-08 | A successful constructor result is deeply immutable, including nested tiles, geometry, lists, diagnostics, and metadata. | All U1 public values |
+| DF-08 | A successful constructor result defensively copies caller input and exposes readonly TypeScript contracts, including nested tiles, geometry, lists, diagnostics, and metadata. Recursive runtime freezing is not required; callers must honor the readonly boundary. | All U1 public values |
 | DF-09 | Expected invalid caller data returns field- or rule-addressable diagnostics and no partial value. | All public constructors |
 | DF-10 | A new play session starts at the accepted dungeon entrance with completion set to false. | Play-session construction |
 | DF-11 | Full-result reproducibility equality includes all layout, effective-settings, validation-report, and version-metadata fields. | U1 comparison contract |

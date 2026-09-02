@@ -18,7 +18,7 @@ Convert the approved dungeon-generator requirements into user-centered personas 
 - [x] Compare applicable story-breakdown approaches.
 - [x] Create context-specific planning questions.
 - [x] Validate all answers and resolve any ambiguity.
-- [ ] Obtain explicit approval of this story-generation plan.
+- [x] Obtain explicit approval of this story-generation plan.
 
 ## Resolved Planning Decisions
 
@@ -128,24 +128,51 @@ X) Other (please describe after [Answer]: tag below)
 
 After plan approval, execute these steps in order and mark each checkbox `[x]` immediately when its work is completed.
 
-- [ ] Read the approved plan, answers, requirements, and assessment; record the selected persona, organization, granularity, acceptance-criteria, accessibility, and recovery decisions.
-- [ ] Generate `aidlc-docs/inception/user-stories/personas.md` with each selected archetype's context, motivations, goals, needs, pain points, accessibility considerations, and relevant journey stages.
-- [ ] Extract story candidates from FR-01 through FR-09 and NFR-01 through NFR-08; ensure every included capability and critical edge scenario has an owning story or acceptance criterion.
-- [ ] Organize the candidates according to the approved breakdown approach and split them to the approved granularity.
-- [ ] Generate `aidlc-docs/inception/user-stories/stories.md` using the approved acceptance-criteria format.
-- [ ] Verify each story against INVEST: Independent, Negotiable, Valuable, Estimable, Small, and Testable; revise any story that fails.
-- [ ] Map every story to applicable personas and approved requirement IDs.
-- [ ] Verify that loot, encounters, gameplay, accounts, persistence, and collaboration have not entered the story scope.
-- [ ] Validate Markdown structure, tables, special-character handling, and any embedded structured content before finalizing files.
-- [ ] Record extension compliance: Security and Resiliency skipped; Property-Based Testing marked N/A for this stage unless a directly applicable enabled rule emerges.
-- [ ] Update AI-DLC state and audit records, then present the generated stories and personas for explicit approval.
+- [x] Read the approved plan, answers, requirements, and assessment; record the selected persona, organization, granularity, acceptance-criteria, accessibility, and recovery decisions.
+- [x] Generate `aidlc-docs/inception/user-stories/personas.md` with each selected archetype's context, motivations, goals, needs, pain points, accessibility considerations, and relevant journey stages.
+- [x] Extract story candidates from FR-01 through FR-09 and NFR-01 through NFR-08; ensure every included capability and critical edge scenario has an owning story or acceptance criterion.
+- [x] Organize the candidates according to the approved breakdown approach and split them to the approved granularity.
+- [x] Generate `aidlc-docs/inception/user-stories/stories.md` using the approved acceptance-criteria format.
+- [x] Verify each story against INVEST: Independent, Negotiable, Valuable, Estimable, Small, and Testable; revise any story that fails.
+- [x] Map every story to applicable personas and approved requirement IDs.
+- [x] Verify that loot, encounters, gameplay, accounts, persistence, and collaboration have not entered the story scope.
+- [x] Validate Markdown structure, tables, special-character handling, and any embedded structured content before finalizing files.
+- [x] Record extension compliance: Security and Resiliency skipped; Property-Based Testing marked N/A for this stage unless a directly applicable enabled rule emerges.
+- [x] Update AI-DLC state and audit records, then present the generated stories and personas for explicit approval.
 
 ## Mandatory Artifacts and Quality Gates
 
-- [ ] Generate `stories.md` with user stories following INVEST criteria.
-- [ ] Generate `personas.md` with user archetypes and characteristics.
-- [ ] Ensure stories are Independent, Negotiable, Valuable, Estimable, Small, and Testable.
-- [ ] Include acceptance criteria for every story.
-- [ ] Map personas to every relevant user story.
-- [ ] Trace stories to approved requirement identifiers.
-- [ ] Preserve all approved scope exclusions.
+- [x] Generate `stories.md` with user stories following INVEST criteria.
+- [x] Generate `personas.md` with user archetypes and characteristics.
+- [x] Ensure stories are Independent, Negotiable, Valuable, Estimable, Small, and Testable.
+- [x] Include acceptance criteria for every story.
+- [x] Map personas to every relevant user story.
+- [x] Trace stories to approved requirement identifiers.
+- [x] Preserve all approved scope exclusions.
+
+## Story Candidate Coverage
+
+| Candidate | User outcome | Requirement coverage |
+|---|---|---|
+| US-01 | Configure generation and playability settings | FR-02, NFR-01, NFR-02 |
+| US-02 | Recover from invalid or impossible settings | FR-02, FR-07, NFR-01, NFR-04, NFR-07 |
+| US-03 | Generate a bounded dungeon with required elements | FR-01, NFR-03, NFR-04, NFR-05 |
+| US-04 | Reproduce a layout with seed and settings | FR-03, FR-09, NFR-04, NFR-06 |
+| US-05 | Receive only structurally valid and playable results | FR-05, FR-06, NFR-04, NFR-06 |
+| US-06 | Recover when generation exhausts its bounded attempts | FR-07, NFR-01, NFR-04 |
+| US-07 | Inspect an accessible visual dungeon | FR-04, NFR-01, NFR-02, NFR-03 |
+| US-08 | Inspect result, validation, seed, settings, and version metadata | FR-09, NFR-01 |
+| US-09 | Adjust settings and regenerate without reloading | FR-08, NFR-01 |
+| US-10 | Use a responsive, stable, release-quality application | NFR-03, NFR-05, NFR-06, NFR-07, NFR-08 |
+
+Critical edge scenarios are assigned as follows: dimension and room-fit errors to US-02; impossible playability combinations to US-02; unreachable or disconnected layouts to US-05; excessive dead ends and insufficient path length to US-05; exhausted attempts to US-06; maximum supported map rendering to US-07 and US-10; and malformed restored settings to US-02.
+
+## Approved Journey Organization
+
+| Journey stage | Stories | Granularity rationale |
+|---|---|---|
+| Configure | US-01, US-02 | Valid configuration and error recovery are independently testable outcomes |
+| Generate | US-03, US-04, US-05, US-06 | Creation, reproducibility, acceptance validation, and bounded-failure recovery have distinct value and failure modes |
+| Inspect | US-07, US-08 | Visual inspection and metadata inspection can be delivered and verified separately |
+| Adjust | US-09 | Regeneration is one cohesive interaction outcome |
+| Rely on the product | US-10 | Cross-cutting runtime and delivery quality are grouped into one release-confidence outcome |

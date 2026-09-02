@@ -4,7 +4,7 @@
 - **Project Type**: Greenfield
 - **Start Date**: 2026-09-02T04:39:52Z
 - **Current Phase**: CONSTRUCTION
-- **Current Stage**: U1 domain-foundation NFR Design - Review
+- **Current Stage**: U1 domain-foundation Code Generation - Review
 - **Requirements Depth**: Comprehensive
 - **Request Clarity**: Resolved through verification and clarification questions
 - **Initial Scope**: Multiple components
@@ -33,7 +33,7 @@
 ## Units of Work
 | Unit | Name | Status |
 |---|---|---|
-| U1 | domain-foundation | Not started |
+| U1 | domain-foundation | Code Generation complete — review |
 | U2 | deterministic-random-and-settings | Not started |
 | U3 | dungeon-generation-strategy | Not started |
 | U4 | dungeon-validator | Not started |
@@ -60,10 +60,10 @@
 - [ ] Operations — placeholder
 
 ## Current Gate
-- Awaiting explicit approval of `aidlc-docs/construction/domain-foundation/nfr-design/`
+- Awaiting explicit approval of U1 `domain-foundation` generated code
 
 ## Planned Next Stage
-- U1 `domain-foundation` Code Generation planning after NFR Design approval
+- U2 `deterministic-random-and-settings` Functional Design after U1 Code Generation approval
 
 ## Execution Plan Summary
 - **Risk Level**: High

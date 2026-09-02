@@ -1,0 +1,40 @@
+# macOS
+.DS_Store
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment files and local secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+build/
+coverage/
+.next/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local Codex / Claude settings
+.claude/settings.local.json
+
+# AI-DLC rule details
+.aidlc-rule-details/

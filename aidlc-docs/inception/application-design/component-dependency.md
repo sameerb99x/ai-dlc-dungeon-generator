@@ -29,6 +29,7 @@ flowchart LR
         C03["C-03 Generation Strategy"]
         C04["C-04 Dungeon Validator"]
         C05["C-05 Settings Processor"]
+        C13["C-13 Play Session Evaluator"]
     end
 
     C09 --> C06
@@ -36,6 +37,7 @@ flowchart LR
     C09 --> C10
     C09 --> C11
     C09 --> C12
+    C09 --> C13
     C06 --> C01
     C06 --> C02
     C06 --> C03
@@ -47,6 +49,7 @@ flowchart LR
     C03 --> C02
     C04 --> C01
     C05 --> C01
+    C13 --> C01
     C10 --> C01
     C11 --> C01
     C11 --> C08
@@ -63,7 +66,8 @@ flowchart LR
 
 ### Static Dependency Text Alternative
 
-- C-09 coordinates C-06, C-07, C-10, C-11, and C-12.
+- C-09 coordinates C-06, C-07, C-10, C-11, C-12, and C-13.
+- C-13 depends only on domain types for movement and completion rules.
 - C-06 depends on domain types, seeded randomness, the generation strategy, the validator, the settings processor, and version metadata.
 - C-03 depends on domain types and the seeded random source.
 - C-04 and C-05 depend only on domain types.
@@ -75,20 +79,21 @@ flowchart LR
 
 `D` means the row component directly depends on the column component's contract. `E` means the row component accesses the external browser capability.
 
-| From | C-01 | C-02 | C-03 | C-04 | C-05 | C-06 | C-07 | C-08 | C-09 | C-10 | C-11 | C-12 | Canvas | Local storage |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| C-01 Domain Model |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-02 Random Source |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-03 Generation Strategy | D | D |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-04 Dungeon Validator | D |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-05 Settings Processor | D |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-06 Generation Service | D | D | D | D | D |  |  | D |  |  |  |  |  |  |
-| C-07 Application State | D |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-08 Version Metadata |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| C-09 Web Controller |  |  |  |  |  | D | D |  |  | D | D | D |  |  |
-| C-10 Canvas Renderer | D |  |  |  |  |  |  |  |  |  |  |  | E |  |
-| C-11 Latest Result Storage | D |  |  |  |  |  |  | D |  |  |  |  |  | E |
-| C-12 Accessible Web View | D |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| From | C-01 | C-02 | C-03 | C-04 | C-05 | C-06 | C-07 | C-08 | C-09 | C-10 | C-11 | C-12 | C-13 | Canvas | Local storage |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| C-01 Domain Model |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-02 Random Source |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-03 Generation Strategy | D | D |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-04 Dungeon Validator | D |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-05 Settings Processor | D |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-06 Generation Service | D | D | D | D | D |  |  | D |  |  |  |  |  |  |  |
+| C-07 Application State | D |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-08 Version Metadata |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-09 Web Controller |  |  |  |  |  | D | D |  |  | D | D | D | D |  |  |
+| C-10 Canvas Renderer | D |  |  |  |  |  |  |  |  |  |  |  |  | E |  |
+| C-11 Latest Result Storage | D |  |  |  |  |  |  | D |  |  |  |  |  |  | E |
+| C-12 Accessible Web View | D |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| C-13 Play Session Evaluator | D |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 ## Generation Data Flow
 
@@ -166,13 +171,15 @@ sequenceDiagram
 - C-06 must not access controls, Canvas, or local storage.
 - C-10 must not mutate a dungeon, settings, validation report, or application state.
 - C-11 must not expose listing, history, accounts, synchronization, or arbitrary record keys.
-- C-12 must not duplicate settings, generation, validation, or restoration business rules.
+- C-12 must not duplicate settings, generation, validation, movement, or restoration business rules.
+- C-13 must not mutate dungeons, generate layouts, render, or persist data.
 - No component may introduce unseeded randomness into deterministic generation.
 
 ## Test Seams Created by Dependencies
 
 - C-06 can receive fake C-02 through C-05 and C-08 dependencies for orchestration tests.
 - C-03 and C-04 can be property-tested without browser setup.
+- C-13 can be property-tested for movement and completion invariants without browser setup.
 - C-09 can be tested with fake state, repository, renderer, and view adapters.
 - C-11 serialization can be round-trip property-tested independently of actual local storage.
 - C-10 can be tested against a controlled Canvas surface and known accepted result.

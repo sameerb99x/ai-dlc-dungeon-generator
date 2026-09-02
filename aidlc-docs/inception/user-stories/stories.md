@@ -131,7 +131,7 @@
 
 **Acceptance criteria**:
 
-- [ ] Rooms, corridors, non-walkable areas, entrance, and exit are visually distinguishable.
+- [ ] Rooms, corridors, non-walkable areas, entrance, exit, and the playable character position are visually distinguishable when a valid result is displayed.
 - [ ] Entrance, exit, terrain, and validation distinctions do not rely on color alone.
 - [ ] The map remains inspectable across supported viewport and map sizes through responsive sizing, scrolling, zooming, or the design-selected equivalent.
 - [ ] Map inspection controls are keyboard operable and programmatically labeled.
@@ -154,7 +154,49 @@
 - [ ] Metadata remains associated with the currently displayed result when settings are subsequently edited.
 - [ ] Metadata and validation status are accessible by keyboard and assistive technology and do not communicate meaning by color alone.
 
-## Journey Stage 4: Adjust
+## Journey Stage 4: Play
+
+### US-11: Navigate the playable character
+
+**User story**: As a Dungeon Creator, I want to move a visible character through the accepted dungeon using the keyboard so that I can traverse the layout from entrance to exit.
+
+**Persona**: P-01 Dungeon Creator
+
+**Requirements**: FR-11, NFR-02, NFR-04, NFR-06
+
+**Acceptance criteria**:
+
+- [ ] A valid accepted dungeon displays a playable character at the entrance when play begins.
+- [ ] The character visual treatment is selected during visual design and remains distinguishable from every walkable tile without relying on color alone.
+- [ ] Arrow keys and WASD each move the character exactly one walkable grid tile in the four cardinal directions.
+- [ ] A move into a wall, blocked tile, or outside the map leaves the character position unchanged.
+- [ ] The dungeon remains fully visible during play; no visited-tile trail or fog of war is added.
+- [ ] Movement commands apply only while the play surface owns the intended interaction context and do not interfere with typing in editable controls.
+- [ ] Play-session state always references an in-bounds walkable tile in the displayed accepted dungeon.
+- [ ] Example-based automated tests cover cardinal movement, blocked moves, and invalid-command no-ops.
+- [ ] Property-based tests verify movement and play-session invariants over domain-valid dungeons and command sequences.
+
+### US-12: Complete, reset, and resume a play session
+
+**User story**: As a Dungeon Creator, I want to finish a play session at the exit, reset when needed, and resume compatible progress after reload so that navigation feels complete and recoverable.
+
+**Persona**: P-01 Dungeon Creator
+
+**Requirements**: FR-12, FR-10, NFR-01, NFR-02, NFR-04
+
+**Acceptance criteria**:
+
+- [ ] Reaching the exit displays a completion state or message.
+- [ ] Completion is true only when the character position is the exit.
+- [ ] A reset action returns the character to the entrance and clears completion.
+- [ ] A newly generated dungeon begins play at its entrance.
+- [ ] Restoring a different compatible locally stored dungeon begins play at that dungeon's entrance.
+- [ ] Reloading the application restores the most recent valid character position and completion state when the stored result remains compatible and valid.
+- [ ] A persisted character coordinate that is out of bounds, blocked, or incompatible with the restored dungeon is discarded safely and play restarts at the entrance.
+- [ ] Reset, completion, and restoration controls and messages are keyboard accessible, programmatically conveyed, and do not communicate meaning by color alone.
+- [ ] Example-based automated tests cover completion, reset, and reload restoration.
+
+## Journey Stage 5: Adjust
 
 ### US-09: Adjust and regenerate
 
@@ -172,11 +214,11 @@
 - [ ] Regeneration does not require a page reload.
 - [ ] The previous valid result remains understandable until a new valid result replaces it or the design presents an explicit transition state.
 - [ ] Regeneration controls and status changes are keyboard operable and programmatically conveyed.
-- [ ] Reloading the application restores exactly the most recent effective settings and generated result from browser-local storage.
+- [ ] Reloading the application restores exactly the most recent effective settings, generated result, and compatible play-session state from browser-local storage.
 - [ ] Malformed, unsupported, or incompatible stored data is discarded safely and does not prevent the application from starting with defaults.
 - [ ] Local persistence does not expose a catalog, multiple-result history, accounts, cloud storage, or synchronization.
 
-## Journey Stage 5: Rely on the Product
+## Journey Stage 6: Rely on the Product
 
 ### US-10: Use a stable and responsive application
 
@@ -193,7 +235,7 @@
 - [ ] Repeatable commands run formatting, static analysis or type checking, example-based tests, and enabled property-based tests.
 - [ ] The selected property-based framework supports custom domain generators, automatic shrinking, replayable seeds, and the primary test runner.
 - [ ] CI runs property-based tests and logs the seed and minimal failing input when a property fails.
-- [ ] Critical workflows have explicit example-based tests in addition to applicable property-based tests.
+- [ ] Critical workflows, including movement, completion, reset, and reload restoration, have explicit example-based tests in addition to applicable property-based tests.
 - [ ] Runtime failures preserve the current user context where safe and provide useful diagnostics without exposing secrets or sensitive environment data.
 - [ ] Browser-delivered code contains no secrets, and release checks identify known critical dependency vulnerabilities.
 
@@ -211,12 +253,14 @@
 | US-08 | Pass | Pass | Pass | Pass | Pass | Pass | One result-metadata inspection outcome |
 | US-09 | Pass | Pass | Pass | Pass | Pass | Pass | One in-session regeneration outcome |
 | US-10 | Pass | Pass | Pass | Pass | Pass | Pass | One release-confidence outcome; concrete stack and architecture choices remain negotiable |
+| US-11 | Pass | Pass | Pass | Pass | Pass | Pass | One keyboard navigation outcome |
+| US-12 | Pass | Pass | Pass | Pass | Pass | Pass | One completion, reset, and restoration outcome |
 
 All stories describe user value without prescribing the generation algorithm, rendering library, framework, deployment topology, or implementation sequence. Each can be verified through its own acceptance criteria and estimated once the design stage selects the relevant technical boundaries.
 
 ## Scope Verification
 
-The story set preserves the approved exclusions while incorporating the later approved narrow exception for browser-local restoration of exactly the most recent settings and result. It does not introduce loot, encounters, real-time gameplay, multiplayer, collaboration, user authentication, accounts, a saved-dungeon catalog, multiple-result history, cloud storage, or synchronization.
+The story set preserves the approved exclusions while incorporating browser-local restoration of exactly the most recent settings, result, and compatible play-session state. It includes keyboard-playable entrance-to-exit navigation but does not introduce loot, encounters, enemies, combat, inventory, health, scoring, timers, multiplayer, collaboration, user authentication, accounts, a saved-dungeon catalog, multiple-result history, cloud storage, or synchronization.
 
 ## Extension Compliance
 

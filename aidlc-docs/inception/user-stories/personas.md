@@ -32,7 +32,8 @@ The Dungeon Creator is a game designer, tabletop facilitator, level designer, or
 - Generate a valid layout with an entrance and exit.
 - Inspect rooms, corridors, blocked areas, validation status, settings, and seed.
 - Adjust constraints and regenerate without losing context.
-- Recover from invalid settings or exhausted generation attempts.
+- Navigate a generated layout from entrance to exit using keyboard controls.
+- Reset a play session or resume compatible progress after reload.
 
 ### Needs
 
@@ -42,7 +43,7 @@ The Dungeon Creator is a game designer, tabletop facilitator, level designer, or
 - Distinct visual treatment for map elements that does not rely on color alone.
 - Keyboard-operable controls and programmatically labeled interface elements.
 - Clear bounds on supported map sizes and playability settings.
-- Seed and version metadata sufficient to understand reproducibility.
+- A visible character position and completion state that remain understandable during play.
 
 ### Pain Points
 
@@ -67,8 +68,9 @@ The Dungeon Creator is a game designer, tabletop facilitator, level designer, or
 2. Resolve invalid settings.
 3. Generate a dungeon.
 4. Inspect the visual result and metadata.
-5. Adjust settings or reproduce a layout.
-6. Recover from unsuccessful generation attempts.
+5. Navigate the character from entrance to exit.
+6. Adjust settings or reproduce a layout.
+7. Recover from unsuccessful generation attempts.
 
 ### Story Mapping
 
@@ -84,9 +86,11 @@ The Dungeon Creator is a game designer, tabletop facilitator, level designer, or
 | US-08 | Inspect validation and reproducibility metadata |
 | US-09 | Adjust settings and regenerate efficiently |
 | US-10 | Rely on a responsive, stable, production-oriented application |
+| US-11 | Navigate the playable character through the accepted dungeon |
+| US-12 | Complete, reset, and resume a play session |
 
 ## Persona Scope Notes
 
 - This persona does not represent an authenticated account holder because accounts are outside the approved scope.
-- This persona may restore the single most recent local settings and result but does not require a saved catalog, multiple-result history, collaboration, loot, encounters, or real-time gameplay.
+- This persona may restore the single most recent local settings, result, and compatible play-session state but does not require a saved catalog, multiple-result history, collaboration, loot, encounters, enemies, combat, inventory, health, scoring, timers, multiplayer, or character customization.
 - A developer or API-integrator persona is not included because the initial product is a visual web application rather than a public integration API.

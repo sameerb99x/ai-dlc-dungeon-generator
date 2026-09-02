@@ -11,6 +11,7 @@ Signatures are technology-neutral. `Result<Success, Failure>` denotes a typed va
 | `createSettings(raw: RawSettings): Result<DungeonSettings, SettingsDiagnostic[]>` | Construct settings from already parsed values while enforcing value-object constraints |
 | `createCoordinate(x: Integer, y: Integer): Coordinate` | Construct a coordinate value |
 | `createDungeon(candidate: DungeonCandidate): Result<Dungeon, DomainDiagnostic[]>` | Construct a bounded dungeon representation from candidate data |
+| `createPlaySession(entrance: Coordinate): PlaySessionState` | Construct an initial play session at the entrance |
 | `dungeonsEqual(left: Readonly<Dungeon>, right: Readonly<Dungeon>): Boolean` | Compare structural content for reproducibility verification |
 
 These constructors enforce only representation-level validity. Complete generation and playability rules remain the validator's responsibility.
@@ -69,6 +70,20 @@ Rule-level methods are public test seams and diagnostic boundaries, not an instr
 
 `SettingsOutcome` is `Result<EffectiveGenerationRequest, SettingsDiagnostic[]>`.
 
+## C-13: Play Session Evaluator
+
+### Interface `PlaySessionEvaluator`
+
+| Signature | Purpose |
+|---|---|
+| `createInitialSession(dungeon: Readonly<Dungeon>): PlaySessionState` | Start play at the entrance of an accepted dungeon |
+| `attemptMove(dungeon: Readonly<Dungeon>, session: Readonly<PlaySessionState>, direction: CardinalDirection): MoveOutcome` | Accept one cardinal move or return the unchanged session when blocked |
+| `isComplete(dungeon: Readonly<Dungeon>, session: Readonly<PlaySessionState>): Boolean` | Determine whether the character position is the exit |
+| `resetSession(dungeon: Readonly<Dungeon>): PlaySessionState` | Return the character to the entrance and clear completion |
+| `validateRestoredSession(dungeon: Readonly<Dungeon>, session: Readonly<PlaySessionState>): RestoreOutcome` | Reject restored play state that is out of bounds, blocked, or incompatible |
+
+`MoveOutcome` is `Result<PlaySessionState, PlayDiagnostic[]>`. Movement never mutates the supplied dungeon.
+
 ## C-06: Dungeon Generation Service
 
 ### Interface `GenerateDungeonUseCase`
@@ -95,9 +110,11 @@ Expected invalid settings, candidate failures, validation failures, and retry ex
 | `getState(): Readonly<ApplicationState>` | Read the current state snapshot |
 | `updateSettings(settings: Readonly<RawSettings>): Void` | Replace editable settings without changing the displayed result |
 | `markGenerating(): Void` | Enter the synchronous generation busy state before invoking the use case |
-| `applyGenerationSuccess(result: Readonly<DungeonResult>): Void` | Replace the current result and clear expected diagnostics |
-| `applyGenerationFailure(diagnostics: ReadonlyList<GenerationDiagnostic>): Void` | Preserve the previous valid result and expose the current failure |
-| `restore(latest: Readonly<StoredLatestResult>): Void` | Restore validated settings and one accepted result |
+| `applyGenerationSuccess(result: Readonly<DungeonResult>): Void` | Replace the current result, initialize play at the entrance, and clear expected diagnostics |
+| `applyGenerationFailure(diagnostics: ReadonlyList<GenerationDiagnostic>): Void` | Preserve the previous valid result and play session and expose the current failure |
+| `applyMove(session: Readonly<PlaySessionState>): Void` | Apply an accepted move and completion transition |
+| `resetPlaySession(session: Readonly<PlaySessionState>): Void` | Reset play to the entrance and clear completion |
+| `restore(latest: Readonly<StoredLatestResult>): Void` | Restore validated settings, one accepted result, and compatible play-session state |
 | `clearRestoredState(reason: RestoreDiagnostic): Void` | Fall back safely after absent or invalid local data |
 | `subscribe(listener: StateListener): Unsubscribe` | Notify presentation adapters after state transitions |
 
@@ -115,8 +132,10 @@ Expected invalid settings, candidate failures, validation failures, and retry ex
 | Signature | Purpose |
 |---|---|
 | `start(): Void` | Bind events, subscribe the view and renderer, and attempt restoration |
-| `generate(rawSettings: Readonly<RawSettings>): Void` | Set busy state, synchronously invoke generation, apply the typed outcome, and persist a success |
+| `generate(rawSettings: Readonly<RawSettings>): Void` | Set busy state, synchronously invoke generation, apply the typed outcome, initialize play at the entrance, and persist a success |
 | `regenerate(seedMode: SeedMode): Void` | Reuse or replace the seed according to explicit user intent and invoke generation |
+| `moveCharacter(direction: CardinalDirection): Void` | Evaluate one cardinal move and apply the typed outcome |
+| `resetPlay(): Void` | Reset play to the entrance and clear completion |
 | `settingsChanged(rawSettings: Readonly<RawSettings>): Void` | Update editable state without mutating metadata belonging to the displayed result |
 | `clearUnexpectedError(): Void` | Clear a user-safe unexpected-fault presentation after recovery |
 
@@ -129,7 +148,7 @@ The controller does not expose cancellation or progress events. Because the use 
 | Signature | Purpose |
 |---|---|
 | `attach(canvas: CanvasSurface): Void` | Bind the committed Canvas surface and required resize observation |
-| `render(result: Readonly<DungeonResult>, options: Readonly<RenderOptions>): RenderOutcome` | Draw a complete accepted result using scale and inspection options |
+| `render(result: Readonly<DungeonResult>, session: Readonly<PlaySessionState>, options: Readonly<RenderOptions>): RenderOutcome` | Draw a complete accepted result and current character position using scale and inspection options |
 | `resize(viewport: Viewport): Void` | Update Canvas backing dimensions and redraw at the selected scale |
 | `setZoom(zoom: ZoomLevel): Void` | Change inspection scale within supported bounds |
 | `clear(): Void` | Clear the surface when no valid result is available |
@@ -143,9 +162,9 @@ The controller does not expose cancellation or progress events. Because the use 
 | Signature | Purpose |
 |---|---|
 | `load(): RestoreOutcome` | Read, decode, version-check, and validate the single fixed local record |
-| `save(result: Readonly<DungeonResult>): Result<Void, StorageDiagnostic>` | Encode and atomically replace the single latest record |
+| `save(result: Readonly<DungeonResult>, session: Readonly<PlaySessionState>): Result<Void, StorageDiagnostic>` | Encode and atomically replace the single latest record |
 | `clear(): Result<Void, StorageDiagnostic>` | Remove the fixed record |
-| `serialize(result: Readonly<DungeonResult>): Result<SerializedRecord, StorageDiagnostic>` | Encode a versioned record through a directly testable round-trip boundary |
+| `serialize(result: Readonly<DungeonResult>, session: Readonly<PlaySessionState>): Result<SerializedRecord, StorageDiagnostic>` | Encode a versioned record through a directly testable round-trip boundary |
 | `deserialize(record: SerializedRecord): Result<StoredLatestResult, StorageDiagnostic>` | Decode and structurally validate a versioned record without trusting its content |
 
 `RestoreOutcome` distinguishes restored data, no data, incompatible data, malformed data, and unavailable storage. No method lists or addresses multiple records.
@@ -171,6 +190,8 @@ The controller does not expose cancellation or progress events. Because the use 
 - Only C-10 depends on Canvas.
 - Only C-11 knows the local-storage key and serialization format.
 - Only C-06 owns bounded retry and acceptance orchestration.
+- Only C-13 owns cardinal movement and play-session validity rules.
+- Movement and play-session state never mutate dungeon topology, settings, or validation results.
 - Detailed algorithms, rule formulas, and state-transition proofs remain deferred to Functional Design.
 
 ## Extension Compliance

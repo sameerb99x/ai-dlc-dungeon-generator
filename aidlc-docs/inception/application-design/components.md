@@ -24,8 +24,9 @@ These technology-neutral types are used across component interfaces. Exact field
 | `DungeonResult` | Accepted dungeon, effective request, validation report, and version metadata |
 | `GenerationDiagnostic` | Typed, actionable expected-failure detail |
 | `GenerationOutcome` | Typed success containing `DungeonResult` or failure containing diagnostics |
-| `ApplicationState` | Current editable settings, busy state, displayed result, and latest diagnostics |
-| `StoredLatestResult` | Versioned serialization envelope for exactly one settings-and-result record |
+| `ApplicationState` | Current editable settings, busy state, displayed result, latest diagnostics, and play-session state |
+| `PlaySessionState` | Character tile coordinate and exit-completion flag for the displayed accepted dungeon |
+| `StoredLatestResult` | Versioned serialization envelope for exactly one settings, result, and play-session record |
 | `RenderOptions` | Canvas viewport, scale, visual theme, and inspection state |
 
 ## Domain Components
@@ -44,6 +45,22 @@ These technology-neutral types are used across component interfaces. Exact field
 **Boundary interfaces**: Domain types and constructors consumed by all other components.
 
 **Must not**: Generate layouts, validate complete dungeons, render, persist, or orchestrate workflows.
+
+### C-13: Play Session Evaluator
+
+**Purpose**: Evaluate cardinal movement, completion, reset, and restored play-session validity without mutating dungeon topology, settings, or validation results.
+
+**Responsibilities**:
+
+- Create an initial play session at the entrance of an accepted dungeon.
+- Accept or reject one cardinal move based on walkability and map bounds.
+- Determine whether the current position satisfies exit completion.
+- Reset a session to the entrance and clear completion.
+- Validate a restored play session against the accepted dungeon before it enters application state.
+
+**Boundary interface**: `PlaySessionEvaluator`.
+
+**Must not**: Generate dungeons, validate generation acceptance, render, persist, or mutate domain dungeon data.
 
 ### C-02: Seeded Random Source
 
@@ -129,8 +146,11 @@ These technology-neutral types are used across component interfaces. Exact field
 
 **Responsibilities**:
 
-- Hold editable settings, busy state, current result, and current diagnostics.
-- Preserve a previous valid result while a new request is processed or fails.
+- Hold editable settings, busy state, current result, current diagnostics, and play-session state.
+- Initialize play at the entrance whenever a new accepted result replaces the displayed dungeon.
+- Apply accepted moves and completion transitions without mutating dungeon topology.
+- Reset play to the entrance and clear completion on explicit user action.
+- Preserve a previous valid result and play session while a new request is processed or fails.
 - Notify subscribed presentation code of state changes.
 - Coordinate restoration state without interpreting storage formats.
 
@@ -161,7 +181,8 @@ These technology-neutral types are used across component interfaces. Exact field
 - Set and clear busy state around the synchronous generation call.
 - Apply success or failure outcomes to application state.
 - Trigger Canvas rendering through state observation.
-- Initiate restoration at application startup and persistence after accepted results.
+- Initiate restoration at application startup and persistence after accepted results and play-session changes.
+- Route movement and reset actions through the play-session evaluator and state store.
 - Route unexpected exceptions to a user-safe error boundary.
 
 **Boundary interface**: Browser event handlers and application bootstrap contract.
@@ -174,10 +195,10 @@ These technology-neutral types are used across component interfaces. Exact field
 
 **Responsibilities**:
 
-- Draw rooms, corridors, blocked areas, entrance, and exit.
+- Draw rooms, corridors, blocked areas, entrance, exit, and the playable character.
 - Implement the committed Canvas rendering boundary.
 - Support the selected scaling, scrolling, zooming, focus, and non-color distinction behavior.
-- Render only accepted `DungeonResult` data supplied by the application state.
+- Render only accepted `DungeonResult` and current `PlaySessionState` data supplied by the application state.
 
 **Boundary interface**: `CanvasDungeonRenderer`.
 
@@ -189,7 +210,7 @@ These technology-neutral types are used across component interfaces. Exact field
 
 **Responsibilities**:
 
-- Serialize, write, read, and deserialize one fixed storage key.
+- Serialize, write, read, and deserialize one fixed storage key including compatible play-session state.
 - Validate envelope and format versions before returning restored data.
 - Return typed absence or invalid-data outcomes without preventing startup.
 - Remove incompatible or malformed data safely.
@@ -208,6 +229,7 @@ These technology-neutral types are used across component interfaces. Exact field
 - Provide keyboard-operable controls, programmatic labels, focus management, and non-color-only status cues.
 - Present result metadata and structured diagnostics.
 - Provide an accessible textual summary or equivalent information for essential Canvas content.
+- Present completion status, a reset action, and play-surface focus behavior.
 
 **Boundary interface**: `DungeonView`.
 
@@ -221,7 +243,8 @@ These technology-neutral types are used across component interfaces. Exact field
 | Seeded deterministic generation | C-01, C-02, C-03, C-06 |
 | Structural and playability acceptance | C-04, C-06 |
 | Synchronous orchestration and recovery | C-06, C-07, C-09 |
-| Canvas visualization and accessibility | C-10, C-12 |
+| Canvas visualization, character rendering, and accessibility | C-10, C-12 |
+| Play-session movement, completion, reset, and restoration validation | C-01, C-07, C-09, C-12, C-13 |
 | Result metadata and version boundaries | C-01, C-08, C-12 |
 | Most-recent local restoration | C-07, C-09, C-11 |
 | Production-oriented diagnostics and testing seams | All components through explicit contracts; especially C-02 through C-06 and C-11 |

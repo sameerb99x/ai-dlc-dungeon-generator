@@ -26,7 +26,7 @@ C) A production-oriented implementation with comprehensive design, tests, and op
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: C
 
 ## Question 3
 What should be the primary way users interact with the dungeon generator?
@@ -41,7 +41,7 @@ D) Standalone desktop or game-engine application
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: B
 
 ## Question 4
 What is the minimum dungeon-generation scope?

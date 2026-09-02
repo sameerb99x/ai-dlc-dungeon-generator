@@ -1,4 +1,6 @@
-# U3 Dungeon Generation Strategy Functional Design Plan
+# Superseded: U3 Dungeon Generation Strategy Functional Design Plan
+
+> This plan belonged to the production-oriented U3–U9 decomposition. It is retained for history only and must not be used for POC implementation; `poc-web-app` is now the sole remaining construction unit.
 
 ## Objective
 
@@ -71,7 +73,7 @@ C) Start from a cellular or drunkard-walk dig and derive rooms afterward from co
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]:  D - Any reasonable choice here is fine.
 
 ## Question 2
 
@@ -85,7 +87,7 @@ C) Keep placing rooms until a configured fraction of the map area is occupied by
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D - Any reasonable choice here is fine.
 
 ## Question 3
 
@@ -99,7 +101,7 @@ C) Connect each room only to its spatially nearest neighbor without guaranteeing
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]:  D - Anything is fine.
 
 ## Question 4
 
@@ -113,7 +115,7 @@ C) Place entrance and exit on any walkable tiles, including corridor tiles, usin
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]:  D - Anything is fine
 
 ## Question 5
 
@@ -127,7 +129,7 @@ C) Honor only geometric construction needs (room fit, corridor carving, marker p
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D - A decent level of playability is good enough.
 
 ## Question 6
 
@@ -141,7 +143,7 @@ C) Almost never: always return some candidate grid, even if empty or marker-defi
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D - Anything is fine
 
 ## Question 7
 
@@ -155,7 +157,7 @@ C) Rooms and corridors are exclusive regions; corridors stop at room boundaries 
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D - Anything reasonable is fine.
 
 ## Question 8
 
@@ -169,7 +171,7 @@ C) Carve center-line paths one tile wide and expand them symmetrically toward `c
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D Anything reasonable is fine.
 
 ## Testable Properties and PBT Handoff
 

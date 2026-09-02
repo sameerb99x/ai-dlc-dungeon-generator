@@ -4,11 +4,11 @@
 - **Project Type**: Greenfield
 - **Start Date**: 2026-09-02T04:39:52Z
 - **Current Phase**: CONSTRUCTION
-- **Current Stage**: U3 dungeon-generation-strategy Functional Design - Awaiting Answers
-- **Requirements Depth**: Comprehensive
-- **Request Clarity**: Resolved through verification and clarification questions
-- **Initial Scope**: Multiple components
-- **Initial Complexity**: Complex
+- **Current Stage**: U3 poc-web-app Code Generation - Awaiting Approval
+- **Requirements Depth**: Standard
+- **Request Clarity**: Resolved through POC scope-change questions
+- **Initial Scope**: One remaining POC unit on completed foundations
+- **Initial Complexity**: Moderate
 
 ## Workspace State
 - **Existing Code**: No
@@ -22,7 +22,7 @@
 | Extension | Enabled | Mode | Decided At |
 |---|---|---|---|
 | Security Baseline | No | Disabled | Requirements Analysis |
-| Property-Based Testing | Yes | Partial: PBT-02, PBT-03, PBT-07, PBT-08, and PBT-09 are blocking | Requirements Analysis |
+| Property-Based Testing | No | Disabled for remaining POC work; completed U1/U2 tests retained | POC Requirements Revision |
 | Resiliency Baseline | No | Disabled | Requirements Analysis |
 
 ## Code Location Rules
@@ -35,13 +35,7 @@
 |---|---|---|
 | U1 | domain-foundation | Code Generation approved |
 | U2 | deterministic-random-and-settings | Code Generation approved |
-| U3 | dungeon-generation-strategy | Functional Design — awaiting answers |
-| U4 | dungeon-validator | Not started |
-| U5 | play-session-evaluator | Not started |
-| U6 | application-core | Not started |
-| U7 | browser-local-storage | Not started |
-| U8 | browser-presentation | Not started |
-| U9 | web-application | Not started |
+| U3 | poc-web-app | Code Generation — awaiting approval |
 
 ## Stage Progress
 - [x] Workspace Detection
@@ -49,8 +43,8 @@
 - [x] Requirements Analysis — playable-maze revision approved
 - [x] User Stories — playable-maze revision approved
 - [x] Workflow Planning
-- [x] Application Design — playable-maze revision approved
-- [x] Units Generation — approved
+- [x] Application Design — POC revision approved
+- [x] Units Generation — POC one-unit revision approved
 - [ ] Functional Design — EXECUTE per applicable unit
 - [ ] NFR Requirements — EXECUTE per applicable unit
 - [ ] NFR Design — EXECUTE per applicable unit
@@ -60,13 +54,13 @@
 - [ ] Operations — placeholder
 
 ## Current Gate
-- Awaiting answers to U3 `dungeon-generation-strategy` Functional Design questions
+- Awaiting approval of generated U3 poc-web-app code
 
 ## Planned Next Stage
-- U3 Functional Design artifact generation after answers are validated
+- Build and Test
 
 ## Execution Plan Summary
-- **Risk Level**: High
-- **Remaining Stage Types to Execute**: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Build and Test per unit
-- **Stages Skipped**: Reverse Engineering because the repository is greenfield; Operations because it is a placeholder
-- **Coordination Approach**: Sequential unit order with parallel U2/U4/U5 after U1 and parallel U7/U8 after U6
+- **Risk Level**: Moderate
+- **Remaining Stage Types to Execute**: Focused Functional Design and Code Generation for one remaining unit; Build and Test
+- **Stages Skipped**: Reverse Engineering because the repository is greenfield; production-oriented NFR/Infrastructure Design unless a POC unit needs a minimal local-build decision; Operations because it is a placeholder
+- **Coordination Approach**: Preserve U1/U2, then complete one consolidated poc-web-app unit

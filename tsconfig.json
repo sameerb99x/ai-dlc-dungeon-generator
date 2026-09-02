@@ -10,11 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "jsx": "react-jsx",
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
       "@domain-foundation/*": ["src/domain-foundation/*"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "vitest.config.ts"]
 }

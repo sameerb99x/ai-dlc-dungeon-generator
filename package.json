@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run tests/domain-foundation",
@@ -11,10 +13,16 @@
     "benchmark:u2": "node scripts/benchmark-u2.mjs"
   },
   "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "@types/node": "^22.10.0",
     "fast-check": "^3.23.2",
     "typescript": "^5.7.2",
+    "vite": "^6.0.7",
     "vitest": "^2.1.8"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }

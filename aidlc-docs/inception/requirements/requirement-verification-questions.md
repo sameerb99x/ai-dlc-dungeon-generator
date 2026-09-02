@@ -56,7 +56,7 @@ D) Analysis only; generation behavior is not yet in scope
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: C but no loot and encounters. What do you mean by "validation" here?
 
 ## Question 5
 What technology constraint should guide the project?
@@ -71,7 +71,7 @@ D) A specific game engine or existing host platform, described under Other
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: A
 
 ## Question 6
 Which quality priority should lead design tradeoffs?
@@ -86,7 +86,7 @@ D) Extensibility for new algorithms, tiles, encounters, and game rules
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: B
 
 ## Question 7
 Should security extension rules be enforced for this project?
@@ -97,7 +97,7 @@ B) No — skip all SECURITY rules (suitable for PoCs, prototypes, and experiment
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: B
 
 ## Question 8
 Should property-based testing (PBT) rules be enforced for this project?
@@ -110,7 +110,7 @@ C) No — skip all PBT rules (suitable for simple CRUD applications, UI-only pro
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: B
 
 ## Question 9
 Should the resiliency baseline be applied to this project?
@@ -123,5 +123,5 @@ B) No — skip the resiliency baseline (suitable for PoCs, prototypes, and exper
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: B
 

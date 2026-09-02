@@ -13,7 +13,7 @@ C) Analyze only the repository and AI-DLC setup as it currently exists
 
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]:
+[Answer]: A
 
 ## Question 2
 What outcome do you want from this AI-DLC workflow?

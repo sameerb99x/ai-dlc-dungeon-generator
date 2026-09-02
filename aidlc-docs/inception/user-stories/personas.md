@@ -88,5 +88,5 @@ The Dungeon Creator is a game designer, tabletop facilitator, level designer, or
 ## Persona Scope Notes
 
 - This persona does not represent an authenticated account holder because accounts are outside the approved scope.
-- This persona does not require saved catalogs, collaboration, loot, encounters, or real-time gameplay.
+- This persona may restore the single most recent local settings and result but does not require a saved catalog, multiple-result history, collaboration, loot, encounters, or real-time gameplay.
 - A developer or API-integrator persona is not included because the initial product is a visual web application rather than a public integration API.

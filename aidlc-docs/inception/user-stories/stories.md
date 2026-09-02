@@ -162,7 +162,7 @@
 
 **Persona**: P-01 Dungeon Creator
 
-**Requirements**: FR-08, NFR-01, NFR-02
+**Requirements**: FR-08, FR-10, NFR-01, NFR-02, NFR-07
 
 **Acceptance criteria**:
 
@@ -172,6 +172,9 @@
 - [ ] Regeneration does not require a page reload.
 - [ ] The previous valid result remains understandable until a new valid result replaces it or the design presents an explicit transition state.
 - [ ] Regeneration controls and status changes are keyboard operable and programmatically conveyed.
+- [ ] Reloading the application restores exactly the most recent effective settings and generated result from browser-local storage.
+- [ ] Malformed, unsupported, or incompatible stored data is discarded safely and does not prevent the application from starting with defaults.
+- [ ] Local persistence does not expose a catalog, multiple-result history, accounts, cloud storage, or synchronization.
 
 ## Journey Stage 5: Rely on the Product
 
@@ -213,7 +216,7 @@ All stories describe user value without prescribing the generation algorithm, re
 
 ## Scope Verification
 
-The story set preserves the approved exclusions. It does not introduce loot, encounters, real-time gameplay, multiplayer, collaboration, user authentication, accounts, persistent dungeon storage, or a hosted dungeon catalog. References to future serialization concern safe restoration and reproducibility testing only; they do not add persistence to the initial product.
+The story set preserves the approved exclusions while incorporating the later approved narrow exception for browser-local restoration of exactly the most recent settings and result. It does not introduce loot, encounters, real-time gameplay, multiplayer, collaboration, user authentication, accounts, a saved-dungeon catalog, multiple-result history, cloud storage, or synchronization.
 
 ## Extension Compliance
 

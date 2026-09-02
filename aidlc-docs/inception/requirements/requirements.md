@@ -87,6 +87,12 @@ The user shall be able to generate another dungeon without reloading the page, r
 
 The displayed result shall include the effective seed, generation settings, validation status, and enough version information to explain reproducibility boundaries.
 
+### FR-10: Restore the most recent local result
+
+The browser application shall persist and restore exactly the most recent effective settings and generated result in browser-local storage. This is a narrow convenience feature and shall not provide a dungeon catalog, multiple saved entries, user accounts, cloud storage, or synchronization.
+
+Stored data shall be versioned and validated before use. Malformed, unsupported, or incompatible local data shall be discarded safely without preventing the application from starting.
+
 ## Non-Functional Requirements
 
 ### NFR-01: Usability and visual quality
@@ -152,7 +158,7 @@ The core domain shall represent:
 - validation results and diagnostics; and
 - generator or format version information required for reproducibility.
 
-Persistent user accounts, cloud storage, collaborative editing, and a saved-dungeon catalog are not required by the current scope.
+Browser-local storage is limited to one most recent settings-and-result record. Persistent user accounts, cloud storage, collaborative editing, multi-result history, and a saved-dungeon catalog are not required by the current scope.
 
 ## Error and Edge Scenarios
 
@@ -175,6 +181,7 @@ The design and implementation shall account for:
 - Seeded procedural generation of rooms and corridors
 - Entrance and exit placement
 - Structural and configurable playability validation
+- Browser-local restoration of exactly the most recent settings and generated result
 - Production-oriented design, automated testing, and build documentation
 
 ### Excluded from the current scope
@@ -184,7 +191,7 @@ The design and implementation shall account for:
 - Real-time dungeon gameplay
 - Multiplayer or collaboration
 - User authentication and accounts
-- Persistent dungeon storage or a hosted dungeon catalog
+- A saved-dungeon catalog, multiple-result history, cloud storage, or synchronization
 - Formal production-readiness or AWS Well-Architected certification
 
 ## Success Criteria
@@ -211,6 +218,7 @@ The project is successful when:
 | Visual quality and usability lead tradeoffs | FR-04, NFR-01, NFR-02 |
 | Partial Property-Based Testing extension | NFR-06 |
 | Security and Resiliency extensions disabled | NFR-07 and explicit scope boundary for formal readiness |
+| Narrow browser-local restoration exception | FR-10 and Data Requirements |
 
 ## Architectural Considerations for Later Stages
 
@@ -227,4 +235,3 @@ The project is successful when:
 | Security Baseline | Skipped | Disabled by user selection |
 | Property-Based Testing, partial mode | Compliant | Future requirements capture invariant testing, domain generators, shrinking, seed reproducibility, framework selection, and serialization round trips. No PBT rule is directly enforced at Requirements Analysis. |
 | Resiliency Baseline | Skipped | Disabled by user selection |
-

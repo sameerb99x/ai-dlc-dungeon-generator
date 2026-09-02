@@ -162,7 +162,7 @@ After plan approval, execute these steps in order and mark each checkbox `[x]` i
 | US-06 | Recover when generation exhausts its bounded attempts | FR-07, NFR-01, NFR-04 |
 | US-07 | Inspect an accessible visual dungeon | FR-04, NFR-01, NFR-02, NFR-03 |
 | US-08 | Inspect result, validation, seed, settings, and version metadata | FR-09, NFR-01 |
-| US-09 | Adjust settings and regenerate without reloading | FR-08, NFR-01 |
+| US-09 | Adjust settings, regenerate, and restore the most recent local result | FR-08, FR-10, NFR-01, NFR-07 |
 | US-10 | Use a responsive, stable, release-quality application | NFR-03, NFR-05, NFR-06, NFR-07, NFR-08 |
 
 Critical edge scenarios are assigned as follows: dimension and room-fit errors to US-02; impossible playability combinations to US-02; unreachable or disconnected layouts to US-05; excessive dead ends and insufficient path length to US-05; exhausted attempts to US-06; maximum supported map rendering to US-07 and US-10; and malformed restored settings to US-02.

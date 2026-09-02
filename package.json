@@ -7,7 +7,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run tests/domain-foundation",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "benchmark:u2": "node scripts/benchmark-u2.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

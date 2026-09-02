@@ -4,7 +4,7 @@
 - **Project Type**: Greenfield
 - **Start Date**: 2026-09-02T04:39:52Z
 - **Current Phase**: CONSTRUCTION
-- **Current Stage**: U2 deterministic-random-and-settings Code Generation - Review
+- **Current Stage**: U3 dungeon-generation-strategy Functional Design - Awaiting Answers
 - **Requirements Depth**: Comprehensive
 - **Request Clarity**: Resolved through verification and clarification questions
 - **Initial Scope**: Multiple components
@@ -34,8 +34,8 @@
 | Unit | Name | Status |
 |---|---|---|
 | U1 | domain-foundation | Code Generation approved |
-| U2 | deterministic-random-and-settings | Code Generation complete — review |
-| U3 | dungeon-generation-strategy | Not started |
+| U2 | deterministic-random-and-settings | Code Generation approved |
+| U3 | dungeon-generation-strategy | Functional Design — awaiting answers |
 | U4 | dungeon-validator | Not started |
 | U5 | play-session-evaluator | Not started |
 | U6 | application-core | Not started |
@@ -60,10 +60,10 @@
 - [ ] Operations — placeholder
 
 ## Current Gate
-- Awaiting explicit approval of U2 `deterministic-random-and-settings` generated code
+- Awaiting answers to U3 `dungeon-generation-strategy` Functional Design questions
 
 ## Planned Next Stage
-- U3 `dungeon-generation-strategy` Functional Design after U2 Code Generation approval
+- U3 Functional Design artifact generation after answers are validated
 
 ## Execution Plan Summary
 - **Risk Level**: High
